@@ -5,17 +5,16 @@ export default class Todo {
     description,
     dueDate,
     priority,
-    noteslist = "",
-    checklist = []
+    notesList,
+    completed = false
   ) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.noteslist = noteslist;
-    this.checklist = checklist;
-    this.completed = false;
+    this.notesList = notesList;
+    this.completed = completed;
   }
 
   toggleCompleted() {
@@ -23,19 +22,16 @@ export default class Todo {
   }
 
   updateDetails({
-    id,
-    title,
-    description,
-    dueDate,
-    priority,
-    noteslist,
-    checklist,
+    newTitle,
+    newDescription,
+    newDueDate,
+    newPriority,
+    newNotesList,
   }) {
-    this.title = title || this.title;
-    this.description = description || this.description;
-    this.dueDate = dueDate || this.dueDate;
-    this.priority = priority || this.priority;
-    this.noteslist = noteslist || this.noteslist;
-    this.checklist = checklist || this.checklist;
+    this.title = newTitle;
+    this.description = newDescription;
+    this.dueDate = newDueDate;
+    this.priority = newPriority;
+    this.notesList = newNotesList;
   }
 }

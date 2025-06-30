@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/c67b5adf08.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Organiza tu vida y tarea eficientemente con nuestra aplicación Todo App. Gestiona proyectos, añade tareas, estableciendo prioridades y fechas de vencimiento. ¡Simplifica tu día a día!"
+    />
+    <title>Todo App</title>
+  </head>
+  <body>
+    <header>
+      <button id="toggle-sidebar-btn">☰ Menú</button>
+      <h1>Tareas Pendientes</h1>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+      <h2>Proyectos</h2>
+      <button id="add-project-btn">Agregar Proyecto</button>
+      <hr />
+      <ul id="project-list" style="list-style: none; padding: 0"></ul>
+    </aside>
+
+    <main>
+      <section style="flex: 2" class="content">
+        <div class="top-content">
+          <h2 id="current-project-title">Ningún proyecto seleccionado</h2>
+          <button id="add-todo-btn" class="add-btn-todo">
+            Añadir Nueva Tarea
+          </button>
+        </div>
+        <ul id="todo-list" style="list-style: none; padding: 0"></ul>
+      </section>
+
+      <section class="todo-details">
+        <h2>Detalle de Tareas</h2>
+        <div id="todo-details-container">
+          <h3>Tarea: <span id="details-todo-title"></span></h3>
+          <p>
+            <strong>Descripción:</strong>
+            <span id="details-todo-description"></span>
+          </p>
+          <p>
+            <strong>Fecha de Vencimiento:</strong>
+            <span id="details-todo-dueDate"></span>
+          </p>
+          <p>
+            <strong>Prioridad:</strong> <span id="details-todo-priority"></span>
+          </p>
+          <p><strong>Notas:</strong> <span id="details-todo-notes"></span></p>
+          <button class="open-edit-modal">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button id="close-details-btn">
+            <i class="fa-solid fa-file-circle-minus"></i>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- modal para crear proyecto -->
+    <dialog id="createProject">
+      <div class="modal-content">
+        <form id="form-project">
+          <fieldset>
+            <legend>Añadir un nuevo projecto</legend>
+            <div class="campo">
+              <label for="title-project">Titulo del Proyecto</label>
+              <input
+                type="text"
+                id="title-project"
+                name="title-project"
+                required
+              />
+            </div>
+          </fieldset>
+          <button type="submit">Crear Proyecto</button>
+          <button id="close-modal-project">Cancelar</button>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- modal para editar un project -->
+    <dialog id="editProject">
+      <div class="modal-content">
+        <form id="form-edit-project">
+          <fieldset>
+            <legend>Editar un nuevo projecto</legend>
+            <div class="campo">
+              <label for="edit-title-project">Titulo del Proyecto</label>
+              <input
+                type="text"
+                id="edit-title-project"
+                name="edit-title-project"
+              />
+            </div>
+          </fieldset>
+          <button type="submit">Crear Proyecto</button>
+          <button id="close-modal-edit-project">Cancelar</button>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- advertencia para eliminar un project -->
+    <dialog id="delete-modal">
+      <div class="modal-content">
+        <div class="content-delete">
+          <p id="message"></p>
+          <div class="btn-events">
+            <button id="yes-delete">Aceptar</button>
+            <button id="no-delete">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- advertencia -->
+    <dialog id="warning-modal">
+      <div class="modal-content">
+        <div class="content-warning">
+          <p id="messageWarning"></p>
+          <div class="btn-events">
+            <button id="message-confirm">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- modal para crear tarea -->
+    <dialog id="createTask">
+      <div class="modal-content">
+        <form id="form-modal">
+          <fieldset>
+            <legend>Agragar Tarea</legend>
+
+            <div class="campo">
+              <span class="error-title"></span>
+              <label for="title">Titulo</label>
+              <input type="text" id="title" name="title" />
+            </div>
+
+            <div class="campo">
+              <label for="description">Descripción</label>
+              <input type="text" id="description" name="description" />
+            </div>
+
+            <div class="campo">
+              <span class="error-date"></span>
+              <label for="dueDate">Fecha de Vencimiento</label>
+              <input type="date" id="dueDate" name="dueDate" />
+            </div>
+
+            <div class="campo">
+              <label for="priority">Prioridad</label>
+              <select id="priority" name="priority">
+                <option value="low">Bajo</option>
+                <option value="medium" selected>Medio</option>
+                <option value="high">Alto</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="noteList">Notas</label>
+              <textarea name="noteList" id="noteList"></textarea>
+            </div>
+          </fieldset>
+          <button type="submit">Crear Tarea</button>
+          <button id="closeModal">Cerrar Modal</button>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- modal para editar una tarea -->
+    <dialog id="editTask">
+      <div class="modal-content">
+        <form action="" id="form-edit-tack">
+          <fieldset>
+            <legend>Editar tarea</legend>
+            <div class="campo">
+              <span class="error-title"></span>
+              <label for="edit-title">Titulo</label>
+              <input type="text" id="edit-title" name="edit-title" />
+            </div>
+
+            <div class="campo">
+              <label for="edit-description">Descripción</label>
+              <input
+                type="text"
+                id="edit-description"
+                name="edit-description"
+              />
+            </div>
+
+            <div class="campo">
+              <span class="error-date"></span>
+              <label for="edit-dueDate">Fecha de Vencimiento</label>
+              <input type="date" id="edit-dueDate" name="edit-dueDate" />
+            </div>
+
+            <div class="campo">
+              <label for="priority">Prioridad</label>
+              <select id="edit-priority" name="edit-priority">
+                <option value="low">Bajo</option>
+                <option value="medium" selected>Medio</option>
+                <option value="high">Alto</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="edit-noteList">Notas</label>
+              <textarea name="edit-noteList" id="edit-noteList"></textarea>
+            </div>
+          </fieldset>
+          <button type="submit">Crear Tarea</button>
+          <button id="closeEditModal">Cerrar Modal</button>
+        </form>
+      </div>
+    </dialog>
+
+    <footer>
+      <p>&copy; 2025 LucasRojas {Dev}. Todos los derechos reservados.</p>
+    </footer>
+  </body>
+</html>

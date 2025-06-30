@@ -1,17 +1,29 @@
 import Todo from "./Todo";
 
 export default class Project {
-  constructor(name) {
+  constructor(id, name, todos = []) {
+    this.id = id;
     this.name = name;
-    this.todos = [];
+    this.todos = todos.map(todoData => new Todo(
+        todoData.id,
+        todoData.title,
+        todoData.description,
+        todoData.dueDate,
+        todoData.priority,
+        todoData.notesList,
+        todoData.completed
+    ));
   }
 
   addTodo(todo) {
+    if(!todo){
+        throw new Error("Solo se puede agregar instancias de Todo a un proyecto ")
+    }
     this.todos.push(todo);
   }
 
-  removeTodo(id) {
-    this.todos = this.todos.filter((t) => t.id !== id);
+  removeTodo(todoId) {
+    this.todos = this.todos.filter((todo) => todo.id !== todoId);
   }
 
   getTodos() {
